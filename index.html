@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Partners Mortgage microsite engagement · PriceHubble</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --blue: #014efb;
+      --blue-deep: #003875;
+      --ink: #1e2124;
+      --muted: #39454f;
+      --line: #e1eaf8;
+      --paper: #f6fafe;
+      --card: #ffffff;
+      --amber: #d67b00;
+      --shadow: 0 1px 2px rgba(0, 56, 117, 0.06), 0 8px 24px rgba(0, 56, 117, 0.04);
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font-family: "Plus Jakarta Sans", "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: var(--paper);
+      min-height: 100vh;
+    }
+    .topbar { height: 4px; background: var(--blue); }
+    header {
+      background: var(--card);
+      border-bottom: 1px solid var(--line);
+    }
+    .header-inner, main {
+      width: min(1120px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 18px 0;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .wordmark {
+      font-family: Outfit, "Plus Jakarta Sans", sans-serif;
+      font-weight: 700;
+      font-size: 22px;
+      letter-spacing: -0.03em;
+      line-height: 1;
+    }
+    .wordmark span { color: var(--blue-deep); }
+    .wordmark b { color: var(--blue); font-weight: 700; }
+    .product {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 500;
+    }
+    .source {
+      text-align: right;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+      max-width: 320px;
+    }
+    main { padding: 28px 0 64px; }
+    h1, h2, .kpi b, .stat b {
+      font-family: Outfit, "Plus Jakarta Sans", sans-serif;
+      letter-spacing: -0.03em;
+    }
+    h1 {
+      margin: 0 0 6px;
+      font-size: 32px;
+      font-weight: 600;
+      color: var(--blue-deep);
+    }
+    .lede {
+      margin: 0 0 22px;
+      max-width: 720px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.5;
+    }
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .kpi {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px 14px 12px;
+      box-shadow: var(--shadow);
+    }
+    .kpi span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+    .kpi b {
+      display: block;
+      margin-top: 8px;
+      font-size: 30px;
+      font-weight: 600;
+      color: var(--blue-deep);
+      line-height: 1;
+    }
+    .kpi.accent { border-color: transparent; background: var(--blue); }
+    .kpi.accent span, .kpi.accent b { color: #fff; }
+    .note {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--blue);
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-bottom: 22px;
+      color: var(--ink);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .note strong { color: var(--blue-deep); }
+    .grid {
+      display: grid;
+      grid-template-columns: 0.9fr 1.3fr;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    section.card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 18px 18px 16px;
+      box-shadow: var(--shadow);
+    }
+    h2 {
+      margin: 0 0 4px;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--blue-deep);
+    }
+    .sub {
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.4;
+    }
+    .bars { display: flex; flex-direction: column; gap: 10px; }
+    .bar-row { display: grid; grid-template-columns: 4.75rem 1fr 2rem; gap: 8px; align-items: center; }
+    .bar-row span { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .track { height: 10px; background: var(--line); border-radius: 99px; overflow: hidden; }
+    .fill { height: 100%; background: var(--blue); border-radius: 99px; min-width: 8px; }
+    .fill.quiet { background: #9bb6e6; }
+    .minutes {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 6px;
+      align-items: end;
+      height: 168px;
+    }
+    .minute { display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; gap: 6px; }
+    .minute .col {
+      width: 100%;
+      background: var(--blue);
+      border-radius: 6px 6px 2px 2px;
+      min-height: 2px;
+    }
+    .minute .col.zero { background: var(--line); height: 2px !important; }
+    .minute em, .minute small {
+      font-style: normal;
+      font-size: 11px;
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+    }
+    .minute em { font-weight: 700; color: var(--blue-deep); }
+    h2.section { margin: 8px 0 4px; }
+    .people {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin: 12px 0 28px;
+    }
+    .person {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-height: 168px;
+    }
+    .person .name { font-weight: 700; font-size: 15px; }
+    .person .views {
+      font-family: Outfit, sans-serif;
+      font-size: 28px;
+      color: var(--blue);
+      letter-spacing: -0.03em;
+      line-height: 1;
+    }
+    .person .views small { font-family: "Plus Jakarta Sans", sans-serif; font-size: 13px; color: var(--muted); font-weight: 600; margin-left: 4px; }
+    .person p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.4; flex: 1; }
+    .person a { color: var(--blue); font-size: 13px; font-weight: 700; text-decoration: none; }
+    .person a:hover { text-decoration: underline; }
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin: 12px 0;
+    }
+    .filters { display: flex; flex-wrap: wrap; gap: 6px; }
+    .filters button, .search {
+      font: inherit;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: var(--card);
+      color: var(--muted);
+    }
+    .filters button {
+      padding: 7px 12px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .filters button[aria-pressed="true"] {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: #fff;
+    }
+    .filters button:focus-visible, .search:focus-visible, th button:focus-visible, a:focus-visible {
+      outline: 2px solid var(--blue);
+      outline-offset: 2px;
+    }
+    .search {
+      margin-left: auto;
+      padding: 8px 14px;
+      min-width: 220px;
+      color: var(--ink);
+    }
+    .table-wrap {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      overflow: auto;
+      max-height: 640px;
+      box-shadow: var(--shadow);
+    }
+    table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+    th {
+      position: sticky;
+      top: 0;
+      background: #f6fafe;
+      z-index: 1;
+    }
+    th button {
+      font: inherit;
+      font-weight: 700;
+      color: var(--blue-deep);
+      background: none;
+      border: 0;
+      padding: 0;
+      cursor: pointer;
+    }
+    td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+    tbody tr:hover { background: #f6fafe; }
+    .chip {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      background: var(--line);
+      color: var(--blue-deep);
+    }
+    .chip.skip { background: #fff4e5; color: var(--amber); }
+    .empty { padding: 28px; color: var(--muted); }
+    footer {
+      width: min(1120px, calc(100% - 40px));
+      margin: 0 auto 28px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    @media (max-width: 980px) {
+      .kpis { grid-template-columns: repeat(3, 1fr); }
+      .grid, .people { grid-template-columns: 1fr 1fr; }
+      .source { display: none; }
+    }
+    @media (max-width: 680px) {
+      .kpis, .grid, .people { grid-template-columns: 1fr; }
+      h1 { font-size: 26px; }
+      .search { margin-left: 0; width: 100%; }
+      .header-inner { align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar"></div>
+  <header>
+    <div class="header-inner">
+      <div class="brand">
+        <svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true">
+          <rect width="32" height="32" rx="8" fill="#014EFB"/>
+          <path fill="#fff" d="M8 15.2 16 8.2l8 7V24a1 1 0 0 1-1 1h-5v-5.4h-4V25H9a1 1 0 0 1-1-1v-8.8z"/>
+        </svg>
+        <div>
+          <div class="wordmark"><span>Price</span><b>Hubble</b></div>
+          <div class="product">Partners Mortgage · microsite engagement</div>
+        </div>
+      </div>
+      <div class="source">Page views read from the leads page on 23 Oct 2026. Each row is matched to its lead card by microsite URL.</div>
+    </div>
+  </header>
+  <main>
+    <h1>Microsite page views</h1>
+    <p class="lede" id="lede"></p>
+    <div class="kpis" id="kpis"></div>
+    <div class="note" id="note"></div>
+    <div class="grid">
+      <section class="card">
+        <h2>Views per lead</h2>
+        <p class="sub">How many leads sit at each page-view count.</p>
+        <div class="bars" id="dist"></div>
+      </section>
+      <section class="card">
+        <h2>First open, 9 Oct 2026</h2>
+        <p class="sub">Leads whose last access falls in each minute from 12:48 to 12:59. Empty minutes are gaps in that pass.</p>
+        <div class="minutes" id="minutes"></div>
+      </section>
+    </div>
+    <h2 class="section">Outside a single first open</h2>
+    <p class="sub" id="outside-sub"></p>
+    <div class="people" id="people"></div>
+    <h2 class="section">All leads</h2>
+    <div class="toolbar">
+      <div class="filters" id="filters" role="group" aria-label="Filter leads"></div>
+      <input class="search" id="search" type="search" placeholder="Search name or phone" aria-label="Search leads">
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th><button type="button" data-sort="name">Name</button></th>
+            <th><button type="button" data-sort="phone">Phone</button></th>
+            <th class="num"><button type="button" data-sort="views">Views</button></th>
+            <th><button type="button" data-sort="last">Last access</button></th>
+            <th><button type="button" data-sort="result">Import</button></th>
+            <th>Microsite</th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+      <div class="empty" id="empty" hidden>No leads match this filter.</div>
+    </div>
+  </main>
+  <footer>Source file: Partners Mortgage - microsites - 9.30-results.csv. Total page views are the figure shown on each lead card.</footer>
+  <script src="data/leads.js"></script>
+  <script>
+    const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+    const leads = (window.LEADS || []).map(function (row) {
+      return Object.assign({}, row, { when: parseWhen(row.lastAccess) });
+    });
+
+    function parseWhen(raw) {
+      if (!raw || raw === "-") return null;
+      var m = raw.match(/^(\d{1,2})\/(\d{1,2})\/(\d{2}),\s*(\d{1,2}):(\d{2})/);
+      if (!m) return { raw: raw, relative: true };
+      return {
+        raw: raw,
+        y: 2000 + Number(m[3]),
+        mo: Number(m[1]),
+        d: Number(m[2]),
+        h: Number(m[4]),
+        mi: Number(m[5])
+      };
+    }
+
+    function formatWhen(lead) {
+      var w = lead.when;
+      if (!w) return "No access";
+      if (w.relative) return w.raw;
+      return w.d + " " + MONTHS[w.mo - 1] + " " + w.y + ", " + String(w.h).padStart(2, "0") + ":" + String(w.mi).padStart(2, "0");
+    }
+
+    function inWave(lead) {
+      var w = lead.when;
+      if (!w || w.relative) return false;
+      return w.y === 2026 && w.mo === 10 && w.d === 9 && w.h === 12 && w.mi >= 48 && w.mi <= 59;
+    }
+
+    function story(lead) {
+      if (lead.views === 0) return "Imported, and the microsite has not been opened.";
+      if (lead.when && lead.when.relative) return "Opened again on 23 Oct. The card showed a relative time when it was read.";
+      if (lead.views > 1 && inWave(lead)) return "More than one view, and the last open is still inside the 12:48 to 12:59 pass.";
+      if (lead.views > 1 && lead.when && lead.when.d === 9 && lead.when.mo === 10) return "Opened again later the same day, at " + formatWhen(lead) + ".";
+      if (lead.views > 1) return "Last open is after 9 Oct, at " + formatWhen(lead) + ".";
+      return "Single view during the first pass.";
+    }
+
+    function band(lead) {
+      if (lead.views === 0) return "never";
+      if (lead.views > 1) return "repeat";
+      return "once";
+    }
+
+    var once = leads.filter(function (l) { return l.views === 1; });
+    var repeat = leads.filter(function (l) { return l.views > 1; });
+    var never = leads.filter(function (l) { return l.views === 0; });
+    var skipped = leads.filter(function (l) { return l.result !== "imported"; });
+    var imported = leads.length - skipped.length;
+    var totalViews = leads.reduce(function (s, l) { return s + l.views; }, 0);
+    var repeatViews = repeat.reduce(function (s, l) { return s + l.views; }, 0);
+
+    document.getElementById("lede").textContent =
+      imported + " of " + leads.length + " leads were imported with outreach queued. " +
+      skipped.length + " were skipped because the phone number was missing. Together the microsites have " +
+      totalViews + " page views.";
+
+    var kpis = [
+      ["Leads in the file", leads.length],
+      ["Imported", imported],
+      ["Skipped, no phone", skipped.length],
+      ["Total page views", totalViews],
+      ["Opened more than once", repeat.length, true],
+      ["Never opened", never.length]
+    ];
+    document.getElementById("kpis").innerHTML = kpis.map(function (k) {
+      return '<div class="kpi' + (k[2] ? " accent" : "") + '"><span>' + k[0] + '</span><b>' + k[1] + '</b></div>';
+    }).join("");
+
+    document.getElementById("note").innerHTML =
+      "<strong>" + once.length + " leads have exactly one page view</strong>, and every one of them was last opened between 12:48 and 12:59 on 9 Oct 2026. " +
+      "Treat that window as the first pass. <strong>" + repeat.length + " leads account for " + repeatViews + " of the " + totalViews + " views.</strong>";
+
+    var distCounts = {};
+    leads.forEach(function (l) { distCounts[l.views] = (distCounts[l.views] || 0) + 1; });
+    var distKeys = Object.keys(distCounts).map(Number).sort(function (a, b) { return a - b; });
+    var distMax = Math.max.apply(null, distKeys.map(function (k) { return distCounts[k]; }));
+    document.getElementById("dist").innerHTML = distKeys.map(function (k) {
+      var n = distCounts[k];
+      var pct = Math.round(n / distMax * 100);
+      var label = k + (k === 1 ? " view" : " views");
+      return '<div class="bar-row"><span>' + label + '</span><div class="track"><div class="fill' + (k === 1 ? "" : " quiet") + '" style="width:' + pct + '%"></div></div><span>' + n + '</span></div>';
+    }).join("");
+
+    var minuteCounts = {};
+    for (var mi = 48; mi <= 59; mi++) minuteCounts[mi] = 0;
+    leads.forEach(function (l) {
+      if (inWave(l)) minuteCounts[l.when.mi] += 1;
+    });
+    var minuteMax = Math.max.apply(null, Object.keys(minuteCounts).map(function (k) { return minuteCounts[k]; }));
+    document.getElementById("minutes").innerHTML = Object.keys(minuteCounts).map(function (k) {
+      var n = minuteCounts[k];
+      var h = n === 0 ? 2 : Math.round(n / minuteMax * 120);
+      return '<div class="minute" title="' + n + ' leads last opened at 12:' + k + '"><em>' + (n || "") + '</em><div class="col' + (n ? "" : " zero") + '" style="height:' + h + 'px"></div><small>:' + k + '</small></div>';
+    }).join("");
+
+    var outside = leads.filter(function (l) { return l.views !== 1; })
+      .sort(function (a, b) { return b.views - a.views || a.name.localeCompare(b.name); });
+    document.getElementById("outside-sub").textContent =
+      outside.length + " leads do not fit the single first open. One has no views. The other " + repeat.length + " were opened more than once.";
+    document.getElementById("people").innerHTML = outside.map(function (l) {
+      return '<article class="person"><div class="name">' + escapeHtml(l.name) + '</div><div class="views">' + l.views + '<small>views</small></div><p>' + escapeHtml(story(l)) + '</p><a href="' + escapeAttr(l.site) + '" target="_blank" rel="noopener">Open microsite</a></article>';
+    }).join("");
+
+    var filters = [
+      ["all", "All", leads.length],
+      ["once", "Single view", once.length],
+      ["repeat", "More than once", repeat.length],
+      ["never", "Never opened", never.length],
+      ["skipped", "Skipped import", skipped.length]
+    ];
+    var active = "all";
+    var sortKey = "views";
+    var sortDir = -1;
+    var query = "";
+
+    document.getElementById("filters").innerHTML = filters.map(function (f) {
+      return '<button type="button" data-filter="' + f[0] + '" aria-pressed="' + (f[0] === "all") + '">' + f[1] + ' ' + f[2] + '</button>';
+    }).join("");
+
+    document.getElementById("filters").addEventListener("click", function (e) {
+      var btn = e.target.closest("button");
+      if (!btn) return;
+      active = btn.getAttribute("data-filter");
+      document.querySelectorAll("#filters button").forEach(function (b) {
+        b.setAttribute("aria-pressed", String(b === btn));
+      });
+      render();
+    });
+    document.getElementById("search").addEventListener("input", function (e) {
+      query = e.target.value.trim().toLowerCase();
+      render();
+    });
+    document.querySelector("thead").addEventListener("click", function (e) {
+      var btn = e.target.closest("button");
+      if (!btn) return;
+      var key = btn.getAttribute("data-sort");
+      if (sortKey === key) sortDir *= -1;
+      else { sortKey = key; sortDir = key === "name" || key === "result" ? 1 : -1; }
+      render();
+    });
+
+    function matches(lead) {
+      if (active === "once" && band(lead) !== "once") return false;
+      if (active === "repeat" && band(lead) !== "repeat") return false;
+      if (active === "never" && band(lead) !== "never") return false;
+      if (active === "skipped" && lead.result === "imported") return false;
+      if (!query) return true;
+      return (lead.name + " " + lead.phone).toLowerCase().indexOf(query) !== -1;
+    }
+
+    function sortValue(lead) {
+      if (sortKey === "name") return lead.name.toLowerCase();
+      if (sortKey === "phone") return lead.phone || "";
+      if (sortKey === "views") return lead.views;
+      if (sortKey === "result") return lead.result || "";
+      if (!lead.when) return 0;
+      if (lead.when.relative) return 9e15;
+      return Date.UTC(lead.when.y, lead.when.mo - 1, lead.when.d, lead.when.h, lead.when.mi);
+    }
+
+    function render() {
+      var shown = leads.filter(matches).sort(function (a, b) {
+        var av = sortValue(a), bv = sortValue(b);
+        if (av < bv) return -1 * sortDir;
+        if (av > bv) return 1 * sortDir;
+        return a.name.localeCompare(b.name);
+      });
+      var body = document.getElementById("rows");
+      body.innerHTML = shown.map(function (l) {
+        var chip = l.result === "imported"
+          ? '<span class="chip">Imported</span>'
+          : '<span class="chip skip">Skipped</span>';
+        var phone = l.phone ? escapeHtml(l.phone) : "No phone";
+        return "<tr><td>" + escapeHtml(l.name) + "</td><td>" + phone + "</td><td class='num'>" + l.views + "</td><td>" + escapeHtml(formatWhen(l)) + "</td><td>" + chip + "</td><td><a href='" + escapeAttr(l.site) + "' target='_blank' rel='noopener'>Open</a></td></tr>";
+      }).join("");
+      document.getElementById("empty").hidden = shown.length !== 0;
+    }
+
+    function escapeHtml(s) {
+      return String(s).replace(/[&<>"]/g, function (c) {
+        return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
+      });
+    }
+    function escapeAttr(s) { return escapeHtml(s).replace(/'/g, "&#39;"); }
+
+    render();
+  </script>
+</body>
+</html>
