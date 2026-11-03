@@ -316,7 +316,7 @@
           <div class="product">Partners Mortgage · microsite engagement</div>
         </div>
       </div>
-      <div class="source">Page views read from the leads page on 26 Oct 2026. Each row is matched to its lead card by microsite URL.</div>
+      <div class="source">Page views read from the leads page on 2 Nov 2026. Each row is matched to its lead card by microsite URL.</div>
     </div>
   </header>
   <main>
@@ -398,7 +398,7 @@
 
     function story(lead) {
       if (lead.views === 0) return "Imported, and the microsite has not been opened.";
-      if (lead.when && lead.when.relative) return "Opened again on 23 Oct. The card showed a relative time when it was read.";
+      if (lead.when && lead.when.relative) return "Last access was shown as \"" + lead.lastAccess + "\" when this data was read on 2 Nov 2026, about 4:06 PM PT.";
       if (lead.views > 1 && inWave(lead)) return "More than one view, and the last open is still inside the 12:48 to 12:59 pass.";
       if (lead.views > 1 && lead.when && lead.when.d === 9 && lead.when.mo === 10) return "Opened again later the same day, at " + formatWhen(lead) + ".";
       if (lead.views > 1) return "Last open is after 9 Oct, at " + formatWhen(lead) + ".";
