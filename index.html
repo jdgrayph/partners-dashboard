@@ -43,18 +43,9 @@
       gap: 24px;
       padding: 18px 0;
     }
-    .brand { display: flex; align-items: center; gap: 12px; }
-    .wordmark {
-      font-family: Outfit, "Plus Jakarta Sans", sans-serif;
-      font-weight: 700;
-      font-size: 22px;
-      letter-spacing: -0.03em;
-      line-height: 1;
-    }
-    .wordmark span { color: var(--blue-deep); }
-    .wordmark b { color: var(--blue); font-weight: 700; }
+    .brand { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
+    .logo { display: block; height: 28px; width: auto; }
     .product {
-      margin-top: 4px;
       color: var(--muted);
       font-size: 13px;
       font-weight: 500;
@@ -151,11 +142,16 @@
       font-size: 13px;
       line-height: 1.4;
     }
+    .facts { display: flex; flex-direction: column; gap: 12px; margin: 0; }
+    .facts div { display: grid; grid-template-columns: 8.5rem 1fr; gap: 12px; font-size: 13.5px; line-height: 1.45; }
+    .facts dt { margin: 0; color: var(--muted); font-weight: 600; }
+    .facts dd { margin: 0; }
     .bars { display: flex; flex-direction: column; gap: 10px; }
     .bar-row { display: grid; grid-template-columns: 4.75rem 1fr 2rem; gap: 8px; align-items: center; }
     .bar-row span { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
     .track { height: 10px; background: var(--line); border-radius: 99px; overflow: hidden; }
     .fill { height: 100%; background: var(--blue); border-radius: 99px; min-width: 8px; }
+    .fill.zero { min-width: 0; background: transparent; }
     .fill.quiet { background: #9bb6e6; }
     .minutes {
       display: grid;
@@ -235,7 +231,37 @@
       border-color: var(--blue);
       color: #fff;
     }
-    .filters button:focus-visible, .search:focus-visible, th button:focus-visible, a:focus-visible {
+    .campaign-head {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+      margin-top: 8px;
+    }
+    .campaign-head h1 { margin: 0; }
+    .campaign-picker {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: min(480px, 100%);
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .campaign-picker select {
+      font: inherit;
+      font-weight: 600;
+      color: var(--ink);
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 8px 36px 8px 14px;
+      flex: 1;
+      width: 100%;
+      min-width: 0;
+      cursor: pointer;
+    }
+    .filters button:focus-visible, .search:focus-visible, .campaign-picker select:focus-visible, th button:focus-visible, a:focus-visible {
       outline: 2px solid var(--blue);
       outline-offset: 2px;
     }
@@ -296,6 +322,7 @@
     }
     @media (max-width: 680px) {
       .kpis, .grid, .people { grid-template-columns: 1fr; }
+      .campaign-picker { width: 100%; }
       h1 { font-size: 26px; }
       .search { margin-left: 0; width: 100%; }
       .header-inner { align-items: flex-start; }
@@ -307,23 +334,93 @@
   <header>
     <div class="header-inner">
       <div class="brand">
-        <svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true">
-          <rect width="32" height="32" rx="8" fill="#014EFB"/>
-          <path fill="#fff" d="M8 15.2 16 8.2l8 7V24a1 1 0 0 1-1 1h-5v-5.4h-4V25H9a1 1 0 0 1-1-1v-8.8z"/>
+        <svg class="logo" width="129" height="31" viewBox="0 0 129 31" fill="none" role="img" aria-label="PriceHubble">
+          <path d="M0.645996 10.1402V17.4238C0.645996 17.6806 0.854143 17.8887 1.11091 17.8887H4.67183C4.92859 17.8887 5.13674 17.6806 5.13674 17.4238V13.4109C5.13674 13.1542 5.34489 12.946 5.60165 12.946H6.53789C6.79465 12.946 7.0028 13.1542 7.0028 13.4109V17.4238C7.0028 17.6806 7.21095 17.8887 7.46771 17.8887H11.1128C11.3696 17.8887 11.5778 17.6806 11.5778 17.4238V10.1475C11.5778 9.93804 11.4706 9.74315 11.2937 9.63094L6.33601 6.48584C6.13254 6.35676 5.87224 6.35916 5.67118 6.49196L0.920576 9.62977C0.749138 9.743 0.645996 9.93474 0.645996 10.1402Z" fill="url(#ph-logo-0)"></path>
+          <path d="M13.172 13.7986V17.4237C13.172 17.6805 13.3801 17.8886 13.6369 17.8886H23.4111C23.6678 17.8886 23.876 17.6805 23.876 17.4237V13.9454C23.876 13.6076 23.6021 13.3337 23.2643 13.3337H13.6369C13.3801 13.3337 13.172 13.5418 13.172 13.7986Z" fill="url(#ph-logo-1)"></path>
+          <path d="M7.17909 0.580078C6.84125 0.580078 6.56737 0.853956 6.56737 1.1918V4.30838C6.56737 4.46644 6.64768 4.61367 6.78056 4.69925L12.848 8.60669C13.0229 8.7193 13.1285 8.91302 13.1285 9.12099V11.2747C13.1285 11.5314 13.3367 11.7396 13.5934 11.7396H17.9452C18.202 11.7396 18.4101 11.5314 18.4101 11.2747V1.1918C18.4101 0.853956 18.1362 0.580078 17.7984 0.580078H7.17909Z" fill="url(#ph-logo-2)"></path>
+          <path d="M23.6057 19.4829H19.8219C19.5804 19.4829 19.3786 19.6666 19.3531 19.9067C19.2257 21.1027 18.7933 24.545 17.8667 26.5079C17.0032 28.3371 15.7469 29.8202 15.2297 30.3904C15.1549 30.473 15.222 30.6013 15.3307 30.5771C16.8759 30.233 23.2459 28.3166 24.0619 19.985C24.0882 19.7169 23.875 19.4829 23.6057 19.4829Z" fill="url(#ph-logo-3)"></path>
+          <path d="M13.172 19.9478V30.3081C13.172 30.5153 13.4153 30.6127 13.5522 30.4571C14.1685 29.7562 15.4186 28.2037 16.4296 26.1115C17.5356 23.8225 17.7026 21.0117 17.724 19.9333C17.729 19.6817 17.5247 19.4829 17.273 19.4829H13.6369C13.3801 19.4829 13.172 19.6911 13.172 19.9478Z" fill="url(#ph-logo-4)"></path>
+          <path d="M1.14407 19.4829H4.92785C5.16932 19.4829 5.37109 19.6666 5.39666 19.9067C5.52406 21.1027 5.95646 24.545 6.88303 26.5079C7.74648 28.3371 9.00286 29.8202 9.51999 30.3904C9.59482 30.473 9.52773 30.6013 9.419 30.5771C7.87382 30.233 1.50382 28.3166 0.687827 19.985C0.661572 19.7169 0.874715 19.4829 1.14407 19.4829Z" fill="url(#ph-logo-5)"></path>
+          <path d="M11.5778 19.9478V30.3081C11.5778 30.5153 11.3344 30.6127 11.1975 30.4571C10.5812 29.7562 9.33109 28.2037 8.32016 26.1115C7.21415 23.8225 7.04711 21.0117 7.0257 19.9333C7.0207 19.6817 7.22501 19.4829 7.47673 19.4829H11.1128C11.3696 19.4829 11.5778 19.6911 11.5778 19.9478Z" fill="url(#ph-logo-6)"></path>
+          <path d="M31.064 21.5246V9.56733H36.4789C37.1963 9.56733 37.8397 9.73246 38.4091 10.0627C38.9785 10.393 39.4227 10.8599 39.7415 11.4634C40.0604 12.067 40.2198 12.7616 40.2198 13.5474C40.2198 14.3332 40.0604 15.0335 39.7415 15.6484C39.4227 16.252 38.9785 16.7189 38.4091 17.0492C37.8397 17.3794 37.1963 17.5445 36.4789 17.5445H33.2846V21.5246H31.064ZM36.3764 15.4093C36.8433 15.4093 37.2305 15.2442 37.538 14.9139C37.8454 14.5723 37.9992 14.1225 37.9992 13.5645C37.9992 13.0065 37.8454 12.5566 37.538 12.215C37.2305 11.8734 36.8433 11.7026 36.3764 11.7026H33.2846V15.4093H36.3764Z" fill="#014EFB"></path>
+          <path d="M42.0197 21.5246V12.8812H43.8132L43.9841 13.6157H44.0695C44.4111 13.126 44.9349 12.8812 45.641 12.8812H47.2296V14.8456H45.7777C45.231 14.8456 44.8154 14.9936 44.5307 15.2897C44.246 15.5744 44.1036 15.9958 44.1036 16.5538V21.5246H42.0197Z" fill="#014EFB"></path>
+          <path d="M50.6094 21.5246H48.5254V12.8812H50.6094V21.5246ZM50.6948 11.4122H48.4571V9.46484H50.6948V11.4122Z" fill="#014EFB"></path>
+          <path d="M56.7247 21.6954C55.9047 21.6954 55.1588 21.5018 54.487 21.1146C53.8151 20.7274 53.2855 20.1922 52.8984 19.5089C52.5226 18.8257 52.3347 18.057 52.3347 17.2029C52.3347 16.3488 52.5226 15.5801 52.8984 14.8969C53.2855 14.2136 53.8151 13.6784 54.487 13.2912C55.1588 12.904 55.9047 12.7104 56.7247 12.7104C57.4877 12.7104 58.1595 12.8641 58.7403 13.1716C59.3211 13.4791 59.788 13.8833 60.141 14.3844C60.4941 14.8855 60.7275 15.4321 60.8414 16.0242H58.7232C58.598 15.6257 58.3645 15.2954 58.0229 15.0335C57.6926 14.7716 57.2599 14.6406 56.7247 14.6406C56.3033 14.6406 55.9161 14.7488 55.5631 14.9652C55.2215 15.1815 54.9482 15.4833 54.7432 15.8705C54.5382 16.2577 54.4357 16.7018 54.4357 17.2029C54.4357 17.704 54.5382 18.1481 54.7432 18.5353C54.9482 18.9225 55.2215 19.2242 55.5631 19.4406C55.9161 19.657 56.3033 19.7652 56.7247 19.7652C57.2713 19.7652 57.7097 19.6342 58.04 19.3723C58.3816 19.099 58.6094 18.7459 58.7232 18.3132H60.8414C60.7275 18.9282 60.4941 19.4918 60.141 20.0043C59.788 20.5168 59.3211 20.9267 58.7403 21.2342C58.1595 21.5417 57.4877 21.6954 56.7247 21.6954Z" fill="#014EFB"></path>
+          <path d="M66.4166 21.6954C65.5967 21.6954 64.8507 21.5018 64.1789 21.1146C63.507 20.7274 62.9774 20.1922 62.5903 19.5089C62.2145 18.8257 62.0266 18.057 62.0266 17.2029C62.0266 16.3488 62.2145 15.5801 62.5903 14.8969C62.9774 14.2136 63.507 13.6784 64.1789 13.2912C64.8507 12.904 65.5967 12.7104 66.4166 12.7104C67.2137 12.7104 67.9369 12.8983 68.586 13.2741C69.2351 13.6499 69.7418 14.168 70.1062 14.8285C70.482 15.4776 70.6699 16.2065 70.6699 17.015C70.6699 17.3908 70.6415 17.6812 70.5845 17.8862H64.1105C64.1903 18.4897 64.4465 18.9851 64.8792 19.3723C65.312 19.7481 65.8244 19.936 66.4166 19.936C66.8493 19.936 67.2308 19.8449 67.5611 19.6627C67.9027 19.4805 68.1475 19.2584 68.2956 18.9965H70.4308C70.1917 19.7139 69.7247 20.3459 69.0301 20.8926C68.3468 21.4278 67.4757 21.6954 66.4166 21.6954ZM68.586 16.4684C68.529 15.8876 68.3013 15.4036 67.9027 15.0164C67.5041 14.6292 67.0087 14.4356 66.4166 14.4356C65.7902 14.4356 65.2721 14.6292 64.8621 15.0164C64.4522 15.3922 64.2016 15.8762 64.1105 16.4684H68.586Z" fill="#014EFB"></path>
+          <path d="M74.7713 21.5246H72.5507V9.56733H74.7713V14.3844H80.1521V9.56733H82.3727V21.5246H80.1521V16.6221H74.7713V21.5246Z" fill="#003875"></path>
+          <path d="M88.1405 21.6954C87.48 21.6954 86.8878 21.5474 86.364 21.2513C85.8515 20.9438 85.4472 20.5168 85.1512 19.9701C84.8665 19.4235 84.7241 18.7915 84.7241 18.0741V12.8812H86.8081V17.8008C86.8081 18.3588 86.9846 18.82 87.3376 19.1844C87.6906 19.5374 88.1348 19.7139 88.67 19.7139C89.228 19.7139 89.6892 19.5317 90.0536 19.1673C90.418 18.7915 90.6002 18.336 90.6002 17.8008V12.8812H92.6842V21.5246H90.8736L90.7027 20.6876H90.6173C90.3896 20.9609 90.0536 21.2 89.6095 21.405C89.1768 21.5986 88.6871 21.6954 88.1405 21.6954Z" fill="#003875"></path>
+          <path d="M99.5981 21.6954C99.0173 21.6954 98.5048 21.5929 98.0607 21.3879C97.628 21.1716 97.2749 20.8869 97.0016 20.5338H96.9162L96.7454 21.5246H94.9518V9.56733H97.0358V13.7865H97.1212C97.3717 13.4791 97.7077 13.2228 98.129 13.0179C98.5618 12.8129 99.0515 12.7104 99.5981 12.7104C100.338 12.7104 101.01 12.8983 101.614 13.2741C102.229 13.6499 102.713 14.1794 103.066 14.8627C103.419 15.546 103.595 16.326 103.595 17.2029C103.595 18.0798 103.419 18.8598 103.066 19.5431C102.713 20.2264 102.229 20.7559 101.614 21.1317C101.01 21.5075 100.338 21.6954 99.5981 21.6954ZM99.2735 19.7652C99.9112 19.7652 100.441 19.5317 100.862 19.0648C101.295 18.5865 101.511 17.9659 101.511 17.2029C101.511 16.4399 101.295 15.825 100.862 15.3581C100.441 14.8798 99.9112 14.6406 99.2735 14.6406C98.6358 14.6406 98.1006 14.8798 97.6678 15.3581C97.2465 15.825 97.0358 16.4399 97.0358 17.2029C97.0358 17.9659 97.2465 18.5865 97.6678 19.0648C98.1006 19.5317 98.6358 19.7652 99.2735 19.7652Z" fill="#003875"></path>
+          <path d="M110.057 21.6954C109.477 21.6954 108.964 21.5929 108.52 21.3879C108.087 21.1716 107.734 20.8869 107.461 20.5338H107.375L107.205 21.5246H105.411V9.56733H107.495V13.7865H107.58C107.831 13.4791 108.167 13.2228 108.588 13.0179C109.021 12.8129 109.511 12.7104 110.057 12.7104C110.798 12.7104 111.469 12.8983 112.073 13.2741C112.688 13.6499 113.172 14.1794 113.525 14.8627C113.878 15.546 114.054 16.326 114.054 17.2029C114.054 18.0798 113.878 18.8598 113.525 19.5431C113.172 20.2264 112.688 20.7559 112.073 21.1317C111.469 21.5075 110.798 21.6954 110.057 21.6954ZM109.733 19.7652C110.37 19.7652 110.9 19.5317 111.321 19.0648C111.754 18.5865 111.97 17.9659 111.97 17.2029C111.97 16.4399 111.754 15.825 111.321 15.3581C110.9 14.8798 110.37 14.6406 109.733 14.6406C109.095 14.6406 108.56 14.8798 108.127 15.3581C107.706 15.825 107.495 16.4399 107.495 17.2029C107.495 17.9659 107.706 18.5865 108.127 19.0648C108.56 19.5317 109.095 19.7652 109.733 19.7652Z" fill="#003875"></path>
+          <path d="M117.954 21.5246H115.87V9.56733H117.954V21.5246Z" fill="#003875"></path>
+          <path d="M124.151 21.6954C123.331 21.6954 122.585 21.5018 121.913 21.1146C121.241 20.7274 120.712 20.1922 120.325 19.5089C119.949 18.8257 119.761 18.057 119.761 17.2029C119.761 16.3488 119.949 15.5801 120.325 14.8969C120.712 14.2136 121.241 13.6784 121.913 13.2912C122.585 12.904 123.331 12.7104 124.151 12.7104C124.948 12.7104 125.671 12.8983 126.32 13.2741C126.969 13.6499 127.476 14.168 127.841 14.8285C128.216 15.4776 128.404 16.2065 128.404 17.015C128.404 17.3908 128.376 17.6812 128.319 17.8862H121.845C121.925 18.4897 122.181 18.9851 122.614 19.3723C123.046 19.7481 123.559 19.936 124.151 19.936C124.584 19.936 124.965 19.8449 125.295 19.6627C125.637 19.4805 125.882 19.2584 126.03 18.9965H128.165C127.926 19.7139 127.459 20.3459 126.765 20.8926C126.081 21.4278 125.21 21.6954 124.151 21.6954ZM126.32 16.4684C126.263 15.8876 126.036 15.4036 125.637 15.0164C125.239 14.6292 124.743 14.4356 124.151 14.4356C123.525 14.4356 123.007 14.6292 122.597 15.0164C122.187 15.3922 121.936 15.8762 121.845 16.4684H126.32Z" fill="#003875"></path>
+          <defs>
+            <linearGradient id="ph-logo-0" x1="0.645996" y1="3.89957" x2="20.8949" y2="30.5661" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#007AFF"></stop>
+              <stop offset="0.457692" stop-color="#014EFB"></stop>
+              <stop offset="1" stop-color="#003875"></stop>
+            </linearGradient>
+            <linearGradient id="ph-logo-1" x1="0.645996" y1="3.89957" x2="20.8949" y2="30.5661" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#007AFF"></stop>
+              <stop offset="0.457692" stop-color="#014EFB"></stop>
+              <stop offset="1" stop-color="#003875"></stop>
+            </linearGradient>
+            <linearGradient id="ph-logo-2" x1="0.645996" y1="3.89957" x2="20.8949" y2="30.5661" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#007AFF"></stop>
+              <stop offset="0.457692" stop-color="#014EFB"></stop>
+              <stop offset="1" stop-color="#003875"></stop>
+            </linearGradient>
+            <linearGradient id="ph-logo-3" x1="0.645996" y1="3.89957" x2="20.8949" y2="30.5661" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#007AFF"></stop>
+              <stop offset="0.457692" stop-color="#014EFB"></stop>
+              <stop offset="1" stop-color="#003875"></stop>
+            </linearGradient>
+            <linearGradient id="ph-logo-4" x1="0.645996" y1="3.89957" x2="20.8949" y2="30.5661" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#007AFF"></stop>
+              <stop offset="0.457692" stop-color="#014EFB"></stop>
+              <stop offset="1" stop-color="#003875"></stop>
+            </linearGradient>
+            <linearGradient id="ph-logo-5" x1="0.645996" y1="3.89957" x2="20.8949" y2="30.5661" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#007AFF"></stop>
+              <stop offset="0.457692" stop-color="#014EFB"></stop>
+              <stop offset="1" stop-color="#003875"></stop>
+            </linearGradient>
+            <linearGradient id="ph-logo-6" x1="0.645996" y1="3.89957" x2="20.8949" y2="30.5661" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#007AFF"></stop>
+              <stop offset="0.457692" stop-color="#014EFB"></stop>
+              <stop offset="1" stop-color="#003875"></stop>
+            </linearGradient>
+          </defs>
         </svg>
-        <div>
-          <div class="wordmark"><span>Price</span><b>Hubble</b></div>
-          <div class="product">Partners Mortgage · microsite engagement</div>
-        </div>
+        <div class="product">Partners Mortgage · microsite engagement</div>
       </div>
-      <div class="source">Page views read from the leads page on 2 Nov 2026. Each row is matched to its lead card by microsite URL.</div>
+      <div class="source">Page views read from the leads page on 5 Nov 2026. Each row is matched to its lead card by microsite URL.</div>
     </div>
   </header>
   <main>
-    <h1>Microsite page views</h1>
+    <div class="campaign-head">
+      <h1 id="page-title"></h1>
+      <label class="campaign-picker">Campaign
+        <select id="campaign-select"></select>
+      </label>
+    </div>
     <p class="lede" id="lede"></p>
     <div class="kpis" id="kpis"></div>
     <div class="note" id="note"></div>
+    <h2 class="section">SMS campaign</h2>
+    <p class="sub" id="campaign-sub"></p>
+    <div class="kpis" id="campaign-kpis"></div>
+    <div class="grid">
+      <section class="card">
+        <h2>Message delivery</h2>
+        <p class="sub" id="delivery-sub"></p>
+        <div class="bars" id="delivery"></div>
+      </section>
+      <section class="card">
+        <h2>Replies and coverage</h2>
+        <p class="sub" id="reply-sub"></p>
+        <dl class="facts" id="facts"></dl>
+      </section>
+    </div>
     <div class="grid">
       <section class="card">
         <h2>Views per lead</h2>
@@ -361,13 +458,17 @@
       <div class="empty" id="empty" hidden>No leads match this filter.</div>
     </div>
   </main>
-  <footer>Source file: Partners Mortgage - microsites - 9.30-results.csv. Total page views are the figure shown on each lead card.</footer>
+  <footer id="page-foot"></footer>
   <script src="data/leads.js"></script>
+  <script src="data/campaign.js"></script>
   <script>
     const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-    const leads = (window.LEADS || []).map(function (row) {
+    const DEFAULT_CAMPAIGN_ID = "reporting-partners-pricehubble-9-30";
+    const allLeads = (window.LEADS || []).map(function (row) {
       return Object.assign({}, row, { when: parseWhen(row.lastAccess) });
     });
+    const leadsByCampaign = {};
+    leadsByCampaign[DEFAULT_CAMPAIGN_ID] = allLeads;
 
     function parseWhen(raw) {
       if (!raw || raw === "-") return null;
@@ -398,7 +499,7 @@
 
     function story(lead) {
       if (lead.views === 0) return "Imported, and the microsite has not been opened.";
-      if (lead.when && lead.when.relative) return "Last access was shown as \"" + lead.lastAccess + "\" when this data was read on 2 Nov 2026, about 4:06 PM PT.";
+      if (lead.when && lead.when.relative) return "Last access was shown as \"" + lead.lastAccess + "\" when this data was read on 5 Nov 2026, about 11:35 AM PT.";
       if (lead.views > 1 && inWave(lead)) return "More than one view, and the last open is still inside the 12:48 to 12:59 pass.";
       if (lead.views > 1 && lead.when && lead.when.d === 9 && lead.when.mo === 10) return "Opened again later the same day, at " + formatWhen(lead) + ".";
       if (lead.views > 1) return "Last open is after 9 Oct, at " + formatWhen(lead) + ".";
@@ -411,81 +512,97 @@
       return "once";
     }
 
-    var once = leads.filter(function (l) { return l.views === 1; });
-    var repeat = leads.filter(function (l) { return l.views > 1; });
-    var never = leads.filter(function (l) { return l.views === 0; });
-    var skipped = leads.filter(function (l) { return l.result !== "imported"; });
-    var imported = leads.length - skipped.length;
-    var totalViews = leads.reduce(function (s, l) { return s + l.views; }, 0);
-    var repeatViews = repeat.reduce(function (s, l) { return s + l.views; }, 0);
-
-    document.getElementById("lede").textContent =
-      imported + " of " + leads.length + " leads were imported with outreach queued. " +
-      skipped.length + " were skipped because the phone number was missing. Together the microsites have " +
-      totalViews + " page views.";
-
-    var kpis = [
-      ["Leads in the file", leads.length],
-      ["Imported", imported],
-      ["Skipped, no phone", skipped.length],
-      ["Total page views", totalViews],
-      ["Opened more than once", repeat.length, true],
-      ["Never opened", never.length]
-    ];
-    document.getElementById("kpis").innerHTML = kpis.map(function (k) {
-      return '<div class="kpi' + (k[2] ? " accent" : "") + '"><span>' + k[0] + '</span><b>' + k[1] + '</b></div>';
-    }).join("");
-
-    document.getElementById("note").innerHTML =
-      "<strong>" + once.length + " leads have exactly one page view</strong>, and every one of them was last opened between 12:48 and 12:59 on 9 Oct 2026. " +
-      "Treat that window as the first pass. <strong>" + repeat.length + " leads account for " + repeatViews + " of the " + totalViews + " views.</strong>";
-
-    var distCounts = {};
-    leads.forEach(function (l) { distCounts[l.views] = (distCounts[l.views] || 0) + 1; });
-    var distKeys = Object.keys(distCounts).map(Number).sort(function (a, b) { return a - b; });
-    var distMax = Math.max.apply(null, distKeys.map(function (k) { return distCounts[k]; }));
-    document.getElementById("dist").innerHTML = distKeys.map(function (k) {
-      var n = distCounts[k];
-      var pct = Math.round(n / distMax * 100);
-      var label = k + (k === 1 ? " view" : " views");
-      return '<div class="bar-row"><span>' + label + '</span><div class="track"><div class="fill' + (k === 1 ? "" : " quiet") + '" style="width:' + pct + '%"></div></div><span>' + n + '</span></div>';
-    }).join("");
-
-    var minuteCounts = {};
-    for (var mi = 48; mi <= 59; mi++) minuteCounts[mi] = 0;
-    leads.forEach(function (l) {
-      if (inWave(l)) minuteCounts[l.when.mi] += 1;
-    });
-    var minuteMax = Math.max.apply(null, Object.keys(minuteCounts).map(function (k) { return minuteCounts[k]; }));
-    document.getElementById("minutes").innerHTML = Object.keys(minuteCounts).map(function (k) {
-      var n = minuteCounts[k];
-      var h = n === 0 ? 2 : Math.round(n / minuteMax * 120);
-      return '<div class="minute" title="' + n + ' leads last opened at 12:' + k + '"><em>' + (n || "") + '</em><div class="col' + (n ? "" : " zero") + '" style="height:' + h + 'px"></div><small>:' + k + '</small></div>';
-    }).join("");
-
-    var outside = leads.filter(function (l) { return l.views !== 1; })
-      .sort(function (a, b) { return b.views - a.views || a.name.localeCompare(b.name); });
-    document.getElementById("outside-sub").textContent =
-      outside.length + " leads do not fit the single first open. One has no views. The other " + repeat.length + " were opened more than once.";
-    document.getElementById("people").innerHTML = outside.map(function (l) {
-      return '<article class="person"><div class="name">' + escapeHtml(l.name) + '</div><div class="views">' + l.views + '<small>views</small></div><p>' + escapeHtml(story(l)) + '</p><a href="' + escapeAttr(l.site) + '" target="_blank" rel="noopener">Open microsite</a></article>';
-    }).join("");
-
-    var filters = [
-      ["all", "All", leads.length],
-      ["once", "Single view", once.length],
-      ["repeat", "More than once", repeat.length],
-      ["never", "Never opened", never.length],
-      ["skipped", "Skipped import", skipped.length]
-    ];
     var active = "all";
     var sortKey = "views";
     var sortDir = -1;
     var query = "";
 
-    document.getElementById("filters").innerHTML = filters.map(function (f) {
-      return '<button type="button" data-filter="' + f[0] + '" aria-pressed="' + (f[0] === "all") + '">' + f[1] + ' ' + f[2] + '</button>';
-    }).join("");
+    function currentLeads() {
+      return leadsByCampaign[campaignSelect.value] || [];
+    }
+
+    function renderViews() {
+      var leads = currentLeads();
+      var once = leads.filter(function (l) { return l.views === 1; });
+      var repeat = leads.filter(function (l) { return l.views > 1; });
+      var never = leads.filter(function (l) { return l.views === 0; });
+      var skipped = leads.filter(function (l) { return l.result !== "imported"; });
+      var imported = leads.length - skipped.length;
+      var totalViews = leads.reduce(function (s, l) { return s + l.views; }, 0);
+      var repeatViews = repeat.reduce(function (s, l) { return s + l.views; }, 0);
+      var onceInWave = once.filter(inWave).length;
+
+      document.getElementById("lede").textContent = leads.length
+        ? imported + " of " + leads.length + " leads were imported with outreach queued. " +
+          skipped.length + " were skipped because the phone number was missing. Together the microsites have " +
+          totalViews + " page views."
+        : "No microsite rows are linked to this campaign.";
+
+      var kpis = [
+        ["Leads in the file", leads.length],
+        ["Imported", imported],
+        ["Skipped, no phone", skipped.length],
+        ["Total page views", totalViews],
+        ["Opened more than once", repeat.length, true],
+        ["Never opened", never.length]
+      ];
+      document.getElementById("kpis").innerHTML = kpis.map(function (k) {
+        return '<div class="kpi' + (k[2] ? " accent" : "") + '"><span>' + k[0] + '</span><b>' + k[1] + '</b></div>';
+      }).join("");
+
+      var note = "<strong>" + once.length + " leads have exactly one page view</strong>";
+      if (once.length && onceInWave === once.length) {
+        note += ", and every one of them was last opened between 12:48 and 12:59 on 9 Oct 2026. Treat that window as the first pass. ";
+      } else {
+        note += ". ";
+      }
+      note += "<strong>" + repeat.length + " leads account for " + repeatViews + " of the " + totalViews + " views.</strong>";
+      document.getElementById("note").innerHTML = note;
+
+      var distCounts = {};
+      leads.forEach(function (l) { distCounts[l.views] = (distCounts[l.views] || 0) + 1; });
+      var distKeys = Object.keys(distCounts).map(Number).sort(function (a, b) { return a - b; });
+      var distMax = distKeys.length ? Math.max.apply(null, distKeys.map(function (k) { return distCounts[k]; })) : 1;
+      document.getElementById("dist").innerHTML = distKeys.map(function (k) {
+        var n = distCounts[k];
+        var pct = Math.round(n / distMax * 100);
+        var label = k + (k === 1 ? " view" : " views");
+        return '<div class="bar-row"><span>' + label + '</span><div class="track"><div class="fill' + (k === 1 ? "" : " quiet") + '" style="width:' + pct + '%"></div></div><span>' + n + '</span></div>';
+      }).join("");
+
+      var minuteCounts = {};
+      for (var mi = 48; mi <= 59; mi++) minuteCounts[mi] = 0;
+      leads.forEach(function (l) {
+        if (inWave(l)) minuteCounts[l.when.mi] += 1;
+      });
+      var minuteMax = Math.max.apply(null, Object.keys(minuteCounts).map(function (k) { return minuteCounts[k]; })) || 1;
+      document.getElementById("minutes").innerHTML = Object.keys(minuteCounts).map(function (k) {
+        var n = minuteCounts[k];
+        var h = n === 0 ? 2 : Math.round(n / minuteMax * 120);
+        return '<div class="minute" title="' + n + ' leads last opened at 12:' + k + '"><em>' + (n || "") + '</em><div class="col' + (n ? "" : " zero") + '" style="height:' + h + 'px"></div><small>:' + k + '</small></div>';
+      }).join("");
+
+      var outside = leads.filter(function (l) { return l.views !== 1; })
+        .sort(function (a, b) { return b.views - a.views || a.name.localeCompare(b.name); });
+      var outsideSub = outside.length + " leads do not fit the single first open.";
+      if (never.length === 1 && repeat.length) outsideSub += " One has no views. The other " + repeat.length + " were opened more than once.";
+      else if (!outside.length && leads.length) outsideSub = "Every lead has exactly one page view.";
+      document.getElementById("outside-sub").textContent = outsideSub;
+      document.getElementById("people").innerHTML = outside.map(function (l) {
+        return '<article class="person"><div class="name">' + escapeHtml(l.name) + '</div><div class="views">' + l.views + '<small>views</small></div><p>' + escapeHtml(story(l)) + '</p><a href="' + escapeAttr(l.site) + '" target="_blank" rel="noopener">Open microsite</a></article>';
+      }).join("");
+
+      var filters = [
+        ["all", "All", leads.length],
+        ["once", "Single view", once.length],
+        ["repeat", "More than once", repeat.length],
+        ["never", "Never opened", never.length],
+        ["skipped", "Skipped import", skipped.length]
+      ];
+      document.getElementById("filters").innerHTML = filters.map(function (f) {
+        return '<button type="button" data-filter="' + f[0] + '" aria-pressed="' + (f[0] === active) + '">' + f[1] + ' ' + f[2] + '</button>';
+      }).join("");
+    }
 
     document.getElementById("filters").addEventListener("click", function (e) {
       var btn = e.target.closest("button");
@@ -529,7 +646,7 @@
     }
 
     function render() {
-      var shown = leads.filter(matches).sort(function (a, b) {
+      var shown = currentLeads().filter(matches).sort(function (a, b) {
         var av = sortValue(a), bv = sortValue(b);
         if (av < bv) return -1 * sortDir;
         if (av > bv) return 1 * sortDir;
@@ -546,6 +663,117 @@
       document.getElementById("empty").hidden = shown.length !== 0;
     }
 
+    var campaigns = (window.CAMPAIGN && window.CAMPAIGN.campaigns) || [];
+    var campaignSelect = document.getElementById("campaign-select");
+    campaignSelect.innerHTML = campaigns.map(function (c) {
+      return '<option value="' + escapeAttr(c.campaign_id) + '">' + escapeHtml(c.campaign_name) + '</option>';
+    }).join("");
+    campaignSelect.value = campaigns.some(function (c) { return c.campaign_id === DEFAULT_CAMPAIGN_ID; })
+      ? DEFAULT_CAMPAIGN_ID
+      : (campaigns[0] ? campaigns[0].campaign_id : "");
+    campaignSelect.addEventListener("change", function () {
+      active = "all";
+      query = "";
+      document.getElementById("search").value = "";
+      renderPage();
+    });
+
+    function renderPage() {
+      var c = campaigns.filter(function (item) { return item.campaign_id === campaignSelect.value; })[0];
+      document.getElementById("page-title").textContent = c ? c.campaign_name : "Campaign";
+      document.title = (c ? c.campaign_name : "Campaign") + " · PriceHubble";
+      renderViews();
+      renderCampaign();
+      render();
+    }
+
+    function renderCampaign() {
+      var report = window.CAMPAIGN;
+      var c = campaigns.filter(function (item) { return item.campaign_id === campaignSelect.value; })[0];
+      if (!c) return;
+      var pct = function (n) { return (n * 100).toFixed(1) + "%"; };
+      var parts = function (iso, timeZone, hour12) {
+        var bag = {};
+        new Intl.DateTimeFormat("en-US", {
+          timeZone: timeZone,
+          day: "numeric", month: "short", year: "numeric",
+          hour: hour12 ? "numeric" : "2-digit",
+          minute: "2-digit",
+          hourCycle: hour12 ? "h12" : "h23"
+        }).formatToParts(new Date(iso)).forEach(function (p) {
+          if (p.type !== "literal") bag[p.type] = p.value;
+        });
+        return bag;
+      };
+      var dateLabel = function (iso) {
+        var p = parts(iso, "UTC", false);
+        return p.day + " " + p.month + " " + p.year;
+      };
+      var clock = function (iso) {
+        var utc = parts(iso, "UTC", false);
+        var pt = parts(iso, "America/Los_Angeles", true);
+        return utc.hour + ":" + utc.minute + " UTC (" + pt.hour + ":" + pt.minute + " " + pt.dayPeriod + " PT)";
+      };
+      var replySec = Math.round(c.median_first_reply_seconds);
+      var replyLabel = Math.floor(replySec / 60) + " min " + String(replySec % 60).padStart(2, "0") + " sec";
+      document.getElementById("campaign-sub").textContent =
+        c.campaign_name + " is a reporting record of a historical send. It did not send new messages. " +
+        c.leads_contacted + " of " + c.total_leads + " leads in this export were contacted on " + dateLabel(c.first_sent_at) +
+        ", from " + clock(c.first_sent_at) + " to " + clock(c.last_sent_at) +
+        ". Figures include activity through " + dateLabel(report.activity_through) + ", " + clock(report.activity_through) + ".";
+      var campaignKpis = [
+        ["Leads", c.total_leads],
+        ["Contacted, " + pct(c.contact_rate), c.leads_contacted],
+        ["Delivered", c.messages_delivered],
+        ["Replied, " + pct(c.reply_rate), c.leads_replied, true],
+        ["Opted out, " + pct(c.opt_out_rate), c.opt_outs],
+        ["Calls booked", c.calls_booked]
+      ];
+      document.getElementById("campaign-kpis").innerHTML = campaignKpis.map(function (k) {
+        return '<div class="kpi' + (k[2] ? " accent" : "") + '"><span>' + k[0] + '</span><b>' + k[1] + '</b></div>';
+      }).join("");
+      document.getElementById("delivery-sub").textContent =
+        c.outbound_messages + " outbound messages were recorded. " +
+        c.messages_delivered + " were delivered and " + c.messages_undelivered + " were undelivered. None failed or stayed pending.";
+      var delivery = [
+        ["Delivered", c.messages_delivered],
+        ["Undelivered", c.messages_undelivered],
+        ["Failed", c.messages_failed],
+        ["Pending", c.messages_pending]
+      ];
+      var deliveryMax = Math.max.apply(null, delivery.map(function (row) { return row[1]; }));
+      document.getElementById("delivery").innerHTML = delivery.map(function (row) {
+        var width = row[1] === 0 ? 0 : Math.round(row[1] / deliveryMax * 100);
+        return '<div class="bar-row"><span>' + row[0] + '</span><div class="track"><div class="fill' +
+          (row[1] === 0 ? " zero" : row[0] === "Delivered" ? "" : " quiet") +
+          '" style="width:' + width + '%"></div></div><span>' + row[1] + '</span></div>';
+      }).join("");
+      document.getElementById("reply-sub").textContent =
+        c.leads_replied + " lead replied, " + c.leads_without_reply + " did not, and " +
+        c.positive_response_leads + " replies were classified as positive.";
+      var unavailableNames = {
+        applications_completed: "application completions",
+        applications_started: "application starts",
+        calls_requested: "call requests"
+      };
+      var unavailable = Object.keys(report.unavailable_metrics || {}).map(function (key) {
+        return unavailableNames[key] || key.replace(/_/g, " ");
+      }).join(", ");
+      var facts = [
+        ["First reply", replyLabel + " after the send, after " + c.median_messages_before_reply + " message."],
+        ["Opt-out", c.opt_outs + " lead opted out, and " + c.currently_opted_out_leads + " is still opted out."],
+        ["Bookings", c.calls_booked + " calls booked."],
+        ["Coverage", "Partial. " + c.coverage.incomplete_attribution_conversations + " conversation could not be fully attributed, and " + c.coverage.replies_without_recorded_intent + " reply has no recorded intent."],
+        ["Not tracked", unavailable + "."]
+      ];
+      document.getElementById("facts").innerHTML = facts.map(function (row) {
+        return "<div><dt>" + row[0] + "</dt><dd>" + row[1] + "</dd></div>";
+      }).join("");
+      document.getElementById("page-foot").textContent =
+        "Page views are the figure shown on each lead card for " + c.campaign_name +
+        ". Campaign figures include activity through " + dateLabel(report.activity_through) + ", " + clock(report.activity_through) + ".";
+    }
+
     function escapeHtml(s) {
       return String(s).replace(/[&<>"]/g, function (c) {
         return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
@@ -553,7 +781,7 @@
     }
     function escapeAttr(s) { return escapeHtml(s).replace(/'/g, "&#39;"); }
 
-    render();
+    renderPage();
   </script>
 </body>
 </html>
