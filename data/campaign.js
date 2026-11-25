@@ -1,5 +1,5 @@
 window.CAMPAIGN = {
-  "activity_through": "2026-11-05T19:24:15.315477+00:00",
+  "activity_through": "2026-11-25T15:25:16.519302+00:00",
   "attribution_model": "last_recorded_campaign_send_v1",
   "campaigns": [
     {
@@ -8,7 +8,7 @@ window.CAMPAIGN = {
       "archived": false,
       "assistant_messages": 82,
       "audience_type": "historical_webhook_cohort",
-      "booking_rate": 0,
+      "booking_rate": 0.0,
       "calls_booked": 0,
       "calls_requested": null,
       "campaign_id": "reporting-partners-pricehubble-9-30",
@@ -35,7 +35,9 @@ window.CAMPAIGN = {
       "initial_messages": 0,
       "last_sent_at": "2026-10-09T21:36:54.469658+00:00",
       "lead_source_id": "110053",
-      "lead_temperature_counts": { "unknown": 82 },
+      "lead_temperature_counts": {
+        "unknown": 82
+      },
       "leads_contacted": 82,
       "leads_replied": 1,
       "leads_skipped": 0,
@@ -56,9 +58,12 @@ window.CAMPAIGN = {
       "outbound_messages": 82,
       "owner_id": "2WrYLviM0HfkaAfCgHIIrw3qLDG3",
       "owner_messages": 0,
-      "pipeline_by_bucket": { "unknown": 82 },
+      "pipeline_by_bucket": {
+        "B01": 1,
+        "unknown": 81
+      },
       "positive_response_leads": 0,
-      "positive_response_rate": 0,
+      "positive_response_rate": 0.0,
       "reply_messages": 1,
       "reply_rate": 0.012195121951219513,
       "skipped_by_reason": {},
@@ -69,8 +74,8 @@ window.CAMPAIGN = {
     }
   ],
   "data_source": "firestore_retained_campaign_evidence",
-  "documents_read": 701,
-  "generated_at": "2026-11-05T19:24:28.828717+00:00",
+  "documents_read": 760,
+  "generated_at": "2026-11-25T15:25:25.751066+00:00",
   "next_cursor": null,
   "organization_id": "KaHUb5X7tIbJf6sOKk9k",
   "positive_response_classifier": "positive-reply-v1",
